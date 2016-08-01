@@ -1,0 +1,38 @@
+{
+  "name": "React-Demo",
+  "version": "0.0.1",
+  "dependencies": {
+    "autoprefixer": "^6.3.7",
+    "babel-polyfill": "^6.9.1",
+    "babel-runtime": "^6.11.6",
+    "normalize": "^0.3.1",
+    "react": "^15.3.0",
+    "react-addons-update": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.11.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.12.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-2": "^6.11.0",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.22.0",
+    "postcss-loader": "^0.9.1",
+    "precss": "^1.4.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --hot  --watch-poll  --inline",
+    "build": "set NODE_ENV=develop&&webpack --progress --profile --colors --config webpack.build.config.js",
+    "publish": "set NODE_ENV=production&&webpack --progress --profile --colors --config webpack.build.config.js"
+  }
+}
