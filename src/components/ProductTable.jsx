@@ -5,55 +5,21 @@ export default class ProductTable extends Component{
 
     constructor(){
         super();
-        this.getProductsByFilterName = this.getProductsByFilterName.bind(this);
-    }
-    getDefaultProp(){
-        return {
-            filterText:""
-        }
-    }
-    getProductsByFilterName(products){
-        var filter = this.props.filterText;
-        if(this.props.filterText == "" || !this.props.filterText){
-            return products;
-        }
-      return products.filter((item)=> {
-              if (new String(item.name).includes(filter)) {
-                  return true;
-              }
-              return false;
-          }
-      )
+        this.createProductComps = this.createProductComps.bind(this);
     }
 
-    getProductsByIsStockedState(products){
-        var isOnlyShowInStocked = this.props.isOnlyShowStocked;
-        if(!isOnlyShowInStocked){
-            return products;
-        }else {
-            return products.filter((item)=> {
-                    return item.stocked
-            });
-        }
+    createProductComps(){
+        return Object.keys(this.props.productsClassified).reduce((identity,keyName)=>{
+            let categoryKey = keyName+"0";
+            identity.push(<CategoryRow category={keyName} key={categoryKey}/>);
+            return identity.concat(this.props.productsClassified[keyName].map((product,index)=>{
+                return <ProductRow key={categoryKey+"_prod_"+index} name={product.name} price={product.price}/>
+            }))
+        },[]);
+
     }
 
     render(){
-
-        let productsClassifiedByCategory = {};
-        this.getProductsByFilterName(this.getProductsByIsStockedState(this.props.products)).map((item,i)=>{
-            if(!productsClassifiedByCategory.hasOwnProperty(item.category)){
-                productsClassifiedByCategory[item.category] = [<CategoryRow category={item.category} key={item.category+"0"}/> ,<ProductRow key={i} name={item.name} price={item.price}/>];
-                return productsClassifiedByCategory;
-            }
-            productsClassifiedByCategory[item.category].push(<ProductRow key={i} name={item.name} price={item.price}/>);
-            return productsClassifiedByCategory;
-        });
-        console.log(productsClassifiedByCategory)
-        let results = [];
-        Object.keys(productsClassifiedByCategory).map((key)=>{
-             results.push(productsClassifiedByCategory[key]);
-         });
-
         return (
             <table>
                 <thead>
@@ -64,7 +30,7 @@ export default class ProductTable extends Component{
                     <th>TotalPrice</th>
                 </tr>
                 </thead>
-                <tbody>{results}</tbody>
+                <tbody>{this.createProductComps()}</tbody>
             </table>
         )
 
